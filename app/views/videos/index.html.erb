@@ -17,7 +17,7 @@
   <tbody>
     <% @videos.each do |video| %>
       <tr>
-        <td><%= video.title %></td>
+        <td><%= link_to video.title, video_path(video) %></td>
         <td><%= video_tag video.content, :size => "320x240", :controls => true %></td>
         <td>
         <% if video.user %>
