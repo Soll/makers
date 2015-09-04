@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
 	has_many :videos
 	has_many :rates
+	has_many :comments
 
 	validates :email, uniqueness: true
 end

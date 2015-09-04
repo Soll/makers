@@ -1,3 +1,4 @@
+<div class="container">
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -28,5 +29,38 @@
 	(<%= @video.rates.count %>)
 </p>
 
-<%= link_to 'Edit', edit_video_path(@video) %> |
-<%= link_to 'Back', videos_path %>
+<% if @video.user == current_user %>
+  <%= link_to 'Редактировать', edit_video_path(@video) %> |
+  <%= link_to 'Back', videos_path %>
+<% end %>
+
+<h4>Комментарии (<%= @comments.count %>):</h4>
+  <% @comments.each do |comment| %>
+    <p>Пользователь <%= comment.user.email %> пишет:</p>
+    <p><%= comment.text %></p>
+    <% if comment.user_id == current_user.id %>  
+      <%= link_to 'Редактировать', edit_comment_path(comment) %>
+      <%= link_to 'Удалить', comment_path(id: comment.id, video_id: @video.id), 
+                                 method: :delete, 
+                                 data: { confirm: 'Are you sure?' } %>
+    <% end %>  
+  <% end %>
+
+<h4>Добавить комментарий:</h4>
+  <%= form_for Comment.new do |f| %>
+  
+  <div class="field">
+    <%= f.label :text %><br>
+    <%= f.text_field :text %>
+  </div>
+  
+  <%= f.text_field :user_id, type: "hidden", value: current_user.id %>
+  <%= f.text_field :video_id, type: "hidden", value: @video.id%>
+  
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+</div>
