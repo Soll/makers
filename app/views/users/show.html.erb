@@ -1,24 +1,79 @@
+<div class="container">
 <p id="notice"><%= notice %></p>
-
+<h4>Информация о пользователе</h4>
+<%= link_to "Редактировать пользователя", edit_user_path(current_user), 
+ 					        class: "btn btn-primary btn-xs", 
+ 					        role: "button"  %>
 <p>
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
 
 <p>
-  <strong>Crypted password:</strong>
-  <%= @user.crypted_password %>
+  <strong>Можно загружать ролики?</strong>
+  <% if @user.maker %>
+    ДА
+  <% else %>
+    НЕТ
+  <% end %>
 </p>
 
-<p>
-  <strong>Salt:</strong>
-  <%= @user.salt %>
-</p>
+<h4>Мои видеоролики:</h4>
+<% if @videos.any? %>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Creator</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-<p>
-  <strong>Maker:</strong>
-  <%= @user.maker %>
-</p>
+  <tbody>
+    <% @videos.each do |video| %>
+      <tr>
+        <td><%= video.title %></td>
+        <td>
+        <% if video.user %>
+          <%= video.user.email %>
+        <% end %>
+        </td>
+        <td><%= video.description %></td>
+        <td><%= link_to 'Show', video %></td>
+        <td><%= link_to 'Edit', edit_video_path(video) %></td>
+        <td><%= link_to 'Destroy', video, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% if current_user.maker %> 
+ <h4>Загрузить новое видео:</h4>
+  <%= form_for Video.new do |f| %>
+  
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.file_field :content %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+
+  <%= f.text_field :user_id, type: "hidden", value: current_user.id %>
+  
+  <div class="actions">
+    <%= f.submit "Добавить видос!" %>
+  </div>
+  <% end %>
+
+<% end %>
+</div>
