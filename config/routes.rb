@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'user_sessions/new'
   get 'user_sessions/create'
   get 'user_sessions/destroy'
+  get "rates/create"
+  get "rates/destroy"
 
   root :to => 'user_sessions#new'
   resources :user_sessions

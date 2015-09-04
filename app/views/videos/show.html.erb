@@ -19,5 +19,14 @@
   <%= @video.description %>
 </p>
 
+<p>
+	<% if @rates %>
+	  <%= link_to "Не нравится!", rates_destroy_path(user_id: current_user.id, video_id: @video.id) %>
+	<% else %>
+    <%= link_to "Нравится!", rates_create_path(user_id: current_user.id, video_id: @video.id) %>
+	<% end %>
+	(<%= @video.rates.count %>)
+</p>
+
 <%= link_to 'Edit', edit_video_path(@video) %> |
 <%= link_to 'Back', videos_path %>
