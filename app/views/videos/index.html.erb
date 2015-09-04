@@ -1,0 +1,36 @@
+<div class="container">
+<p id="notice"><%= notice %></p>
+
+<h1>Список видеороликов</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Creator</th>
+      <th>Description</th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @videos.each do |video| %>
+      <tr>
+        <td><%= video.title %></td>
+        <td><%= video_tag video.content, :size => "320x240", :controls => true %></td>
+        <td>
+        <% if video.user %>
+          <%= video.user.email %>
+        <% end %>
+        </td>
+        <td><%= video.description %></td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+</div>

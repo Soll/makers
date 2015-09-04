@@ -1,15 +1,16 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :require_login, only: [:index, :new, :create]
+  skip_before_filter :require_login, only: [:new, :create]
   # GET /users
   # GET /users.json
-  def index
-    @users = User.all
-  end
+  #def index
+   # @users = User.all
+  #end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    @videos = @user.videos.all
   end
 
   # GET /users/new
@@ -26,15 +27,12 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
       if @user.save
-        format.html { redirect_to users_path, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
+        @user = login(params[:user][:email], params[:user][:password])
+        redirect_to videos_path
       else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        render "new"
       end
-    end
   end
 
   # PATCH/PUT /users/1
