@@ -1,13 +1,13 @@
 class RatesController < ApplicationController
-  def create (user_id = params[:user_id], video_id = params[:video_id])
-    @rate = Rate.new
-    @rate = Rate.create(user_id: user_id, video_id: video_id)
-    redirect_to video_path(video_id)
+  def create
+    @rate = current_user.rates.create(video_id: params[:video_id])
+    redirect_to video_path(params[:video_id])
   end
 
-  def destroy (user_id = params[:user_id], video_id = params[:video_id])
-  	@rate = Rate.find_by user_id: user_id, video_id: video_id
-  	@rate.destroy
-  	redirect_to video_path(video_id)
+  def destroy
+  	@rate= Rate.find(params[:id])
+  	redir_video_id = @rate.video_id
+    @rate.destroy
+  	redirect_to video_path(redir_video_id)
   end
 end

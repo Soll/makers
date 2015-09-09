@@ -10,8 +10,8 @@ class VideosController < ApplicationController
   # GET /videos/1
   # GET /videos/1.json
   def show
-    @rates = Rate.find_by user_id: current_user.id, video_id: @video.id
-    @comments = @video.comments.all
+    @rates = @video.rates.find_by_user_id(current_user)
+    @comments = @video.comments
   end
 
   # GET /videos/new

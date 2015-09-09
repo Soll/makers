@@ -22,9 +22,9 @@
 
 <p>
 	<% if @rates %>
-	  <%= link_to "Не нравится!", rates_destroy_path(user_id: current_user.id, video_id: @video.id) %>
+	  <%= link_to "Не нравится!", rate_path(@rates), method: :delete %>
 	<% else %>
-    <%= link_to "Нравится!", rates_create_path(user_id: current_user.id, video_id: @video.id) %>
+    <%= link_to "Нравится!", rates_path(video_id: @video), method: :post %>
 	<% end %>
 	(<%= @video.rates.count %>)
 </p>
@@ -40,7 +40,7 @@
     <p><%= comment.text %></p>
     <% if comment.user_id == current_user.id %>  
       <%= link_to 'Редактировать', edit_comment_path(comment) %>
-      <%= link_to 'Удалить', comment_path(id: comment.id, video_id: @video.id), 
+      <%= link_to 'Удалить', comment_path(comment, video_id: @video), 
                                  method: :delete, 
                                  data: { confirm: 'Are you sure?' } %>
     <% end %>  
