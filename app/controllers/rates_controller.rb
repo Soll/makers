@@ -6,8 +6,7 @@ class RatesController < ApplicationController
 
   def destroy
   	@rate= Rate.find(params[:id])
-  	redir_video_id = @rate.video_id
     @rate.destroy
-  	redirect_to video_path(redir_video_id)
+  	redirect_to video_path(@rate.video_id)
   end
 end
