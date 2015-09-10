@@ -40,7 +40,7 @@
     <p><%= comment.text %></p>
     <% if comment.user_id == current_user.id %>  
       <%= link_to 'Редактировать', edit_comment_path(comment) %>
-      <%= link_to 'Удалить', comment_path(comment, video_id: @video), 
+      <%= link_to 'Удалить', comment_path(comment), 
                                  method: :delete, 
                                  data: { confirm: 'Are you sure?' } %>
     <% end %>  

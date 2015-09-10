@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment.destroy
-    redirect_to video_path(params[:video_id])
+    redirect_to video_path(@comment.video_id)
   end
 
   private
